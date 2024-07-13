@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #1a1a2e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+#raindrops-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#rain-animation {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+#title {
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+#boxes-container {
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.box {
+    width: 150px;
+    height: 150px;
+    background-image: url('assets/box-inactive.png');
+    background-size: cover;
+    cursor: pointer;
+}
+
+.box.active {
+    background-image: url('assets/box-active.png');
+}
