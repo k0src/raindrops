@@ -34,13 +34,21 @@ body {
     bottom: 50px;
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    gap: 20px; 
+}
+
+.row {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
 }
 
 .box {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     background-image: url('assets/box-inactive.png');
     background-size: cover;
     cursor: pointer;

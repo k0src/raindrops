@@ -1,24 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
     const boxes = document.querySelectorAll('.box');
-    const glassSoundsFolder = 'assets/sounds/glass-sounds/';
     const rainSound = new Audio('assets/sounds/rain.mp3');
-    rainSound.volume = 0.15;
-    let glassSounds = [
-        'sound1.mp3',
-        'sound2.mp3',
-        'sound3.mp3',
-        'sound4.mp3',
-        'sound5.mp3',
-        'sound6.mp3'
-    ];
-    let activeBoxImages = [
-        'active1.png',
-        'active2.png',
-        'active3.png',
-        'active4.png',
-        'active5.png',
-        'active6.png'
-    ];
+    rainSound.volume = 0.12;
+
+    const soundTypes = ['perc', 'pad', 'chime', 'bass', 'atmos'];
+    const soundsFolder = 'assets/sounds/glass-sounds/';
+    const boxActivesFolder = 'assets/box-actives/';
+    const soundFolders = {
+        perc: [],
+        pad: [],
+        chime: [],
+        bass: [],
+        atmos: []
+    };
+
+    soundTypes.forEach(type => {
+        for (let i = 1; i <= 12; i++) {
+            soundFolders[type].push(`${soundsFolder}${type}/${type}${i}.wav`);
+        }
+    });
 
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -27,15 +27,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    shuffleArray(glassSounds);
-    shuffleArray(activeBoxImages);
+    Object.keys(soundFolders).forEach(key => shuffleArray(soundFolders[key]));
 
     let rainSoundPlaying = false;
 
     boxes.forEach((box, index) => {
         let audio;
         let currentSound;
-        let activeImage = activeBoxImages[index];
+        const row = Math.floor(index / 4);
+        const type = soundTypes[row];
+        const activeImage = `${boxActivesFolder}${type}.gif`;
 
         box.addEventListener('click', () => {
             if (!rainSoundPlaying) {
@@ -52,13 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 box.style.backgroundImage = "url('assets/box-inactive.png')";
             } else {
                 if (!currentSound) {
-                    currentSound = glassSounds[Math.floor(Math.random() * glassSounds.length)];
-                    audio = new Audio(`${glassSoundsFolder}${currentSound}`);
+                    currentSound = soundFolders[type].shift();
+                    audio = new Audio(currentSound);
                     audio.loop = true;
                 }
                 audio.play();
                 box.classList.add('active');
-                box.style.backgroundImage = `url('assets/box-actives/${activeImage}')`;
+                box.style.backgroundImage = `url('${activeImage}')`;
             }
         });
     });
